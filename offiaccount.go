@@ -61,6 +61,10 @@ type Config struct {
 	Secret         string
 	Token          string
 	EncodingAESKey string
+
+	IsPlatformMode        bool //  是否是平台模式， 默认false
+	ComponentVerifyTicket string
+	ComponentAccessToken  string
 }
 
 /*

@@ -37,8 +37,12 @@ import (
 	"github.com/fastwego/offiaccount"
 )
 
-var OauthAuthorizeServerUrl = "https://open.weixin.qq.com"
+var (
+	OauthAuthorizeServerUrl             = "https://open.weixin.qq.com" // 微信开发 域名
+	OauthOpenPlatformAuthorizeServerUrl = "https://api.weixin.qq.com"  // 微信开放平台 域名
+)
 
+// 微信开发者模式
 const (
 	apiAuthorize    = "/connect/oauth2/authorize"
 	apiAccessToken  = "/sns/oauth2/access_token"
@@ -51,6 +55,9 @@ const (
 	ScopeSnsapiBase     = "snsapi_base"
 	ScopeSnsapiUserinfo = "snsapi_userinfo"
 )
+
+// 微信开放平台模式
+const apiOpenPlatformAuthorize = "/cgi-bin/component/api_authorizer_token"
 
 /*
 获取 用户授权 跳转链接
@@ -164,7 +171,7 @@ const (
 type OauthUserInfo struct {
 	Openid     string   `json:"openid"`
 	Nickname   string   `json:"nickname"`
-	Sex        int      `json:"sex"`
+	Sex        int64    `json:"sex"`
 	Province   string   `json:"province"`
 	City       string   `json:"city"`
 	Country    string   `json:"country"`
