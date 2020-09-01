@@ -62,19 +62,19 @@ func (client *Client) HTTPGet(uri string) (resp []byte, err error) {
 	if err == NeedRefreshAccessTokenError {
 		_, err := client.Ctx.AccessToken.GetRefreshAccessTokenHandler(client.Ctx)
 		if err != nil {
-			return
+			return nil, err
 		}
 
 		newUrl, err = client.applyAccessToken(uri)
 		if err != nil {
-			return
+			return nil, err
 		}
 		if client.Ctx.Logger != nil {
 			client.Ctx.Logger.Printf("Refresh Access Token Second GET %s", newUrl)
 		}
 		response, err := http.Get(WXServerUrl + newUrl)
 		if err != nil {
-			return
+			return nil, err
 		}
 		defer response.Body.Close()
 		return responseFilter(response)
@@ -101,19 +101,19 @@ func (client *Client) HTTPPost(uri string, payload io.Reader, contentType string
 	if err == NeedRefreshAccessTokenError {
 		_, err := client.Ctx.AccessToken.GetRefreshAccessTokenHandler(client.Ctx)
 		if err != nil {
-			return
+			return nil, err
 		}
 
 		newUrl, err = client.applyAccessToken(uri)
 		if err != nil {
-			return
+			return nil, err
 		}
 		if client.Ctx.Logger != nil {
 			client.Ctx.Logger.Printf("Refresh Access Token Second POST %s", newUrl)
 		}
 		response, err := http.Post(WXServerUrl+newUrl, contentType, payload)
 		if err != nil {
-			return
+			return nil, err
 		}
 		defer response.Body.Close()
 		return responseFilter(response)
