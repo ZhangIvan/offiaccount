@@ -64,8 +64,20 @@ type Config struct {
 
 	IsPlatformMode        bool   //  是否是平台模式， 默认false
 	ComponentVerifyTicket string // Ticket 内容
-	ComponentAccessToken  string
+	ComponentAccessToken  string //
 	JsApiTicket           string //
+
+	WeChatType             string // 微信类型
+	AuthorizationCode      string //授权code
+	AuthorizerAccessToken  string //
+	AuthorizerRefreshToken string //
+	Biz                    string //
+	HeadImageUrl           string // 微信头像
+	QRCodeUrl              string // 微信关注二维码
+	AuthorizationSubject   string // 认证主体
+	MainBusiness           string // 主行业
+	SecondBusiness         string // 副行业
+
 }
 
 /*
