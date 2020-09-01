@@ -69,15 +69,16 @@ const apiOpenPlatformAuthorize = "/cgi-bin/component/api_authorizer_token"
 如果用户同意授权，页面将跳转至 redirect_uri/?code=CODE&state=STATE
 
 See: https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/Wechat_webpage_authorization.html
+
+GET https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf0e81c3bee622d60&redirect_uri=http%3A%2F%2Fnba.bluewebgame.com%2Foauth_response.php&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
 */
 func GetAuthorizeUrl(appid string, redirectUri string, scope string, state string) (authorizeUrl string) {
 	params := url.Values{}
 	params.Add("appid", appid)
 	params.Add("redirect_uri", redirectUri)
+	params.Add("response_type", "code")
 	params.Add("scope", scope)
 	params.Add("state", state)
-	params.Add("response_type", "code")
-
 	return OauthAuthorizeServerUrl + apiAuthorize + "?" + params.Encode()
 }
 

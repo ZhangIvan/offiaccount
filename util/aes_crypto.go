@@ -18,10 +18,7 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"encoding/base64"
-	"errors"
 	"fmt"
-	"math/rand"
-	"time"
 )
 
 // 把整数 n 格式化成 4 字节的网络字节序
@@ -188,69 +185,4 @@ func AESDecryptData(cipherText []byte, aesKey []byte, iv []byte) (rawData []byte
 
 	return
 
-}
-
-type WXBizMsgCrypt struct {
-	Token          string // 公众平台上，开发者设置的Token
-	EncodingAESKey string // 公众平台上，开发者设置的EncodingAESKey
-	AppId          string // 公众平台的AppId
-	Key            []byte // EncodingAESKey bs64 处理得到的
-}
-
-func (m *WXBizMsgCrypt) EncryptMsg(sReplyMsg, sNonce, timestamp string) (error, string) {
-	return nil, ""
-}
-
-func (m *WXBizMsgCrypt) DecryptMsg(sPostData, sMsgSignature, sTimeStamp, sNonce string) (error, string) {
-	return nil, ""
-}
-
-type PrpCrypt struct {
-	key  []byte
-	mode int
-}
-
-// text: 需要加密的明文
-func (p *PrpCrypt) encrypt(text, appId string) {
-	//text_bytes := []byte(text)
-	//string(p.Krand(16, KC_RAND_KIND_ALL))
-}
-
-const (
-	KC_RAND_KIND_NUM   = 0 // 纯数字
-	KC_RAND_KIND_LOWER = 1 // 小写字母
-	KC_RAND_KIND_UPPER = 2 // 大写字母
-	KC_RAND_KIND_ALL   = 3 // 数字、大小写字母
-)
-
-// 随机字符串
-func (p *PrpCrypt) Krand(size int, kind int) []byte {
-	ikind, kinds, result := kind, [][]int{[]int{10, 48}, []int{26, 97}, []int{26, 65}}, make([]byte, size)
-	is_all := kind > 2 || kind < 0
-	rand.Seed(time.Now().UnixNano())
-	for i := 0; i < size; i++ {
-		if is_all { // random ikind
-			ikind = rand.Intn(3)
-		}
-		scope, base := kinds[ikind][0], kinds[ikind][1]
-		result[i] = uint8(base + rand.Intn(scope))
-	}
-	return result
-}
-
-func NewWXBizMsgCrypt(token, EncodingAESKey, appId string) (error, *WXBizMsgCrypt) {
-	key, err := base64.StdEncoding.DecodeString(EncodingAESKey + "=")
-	if err != nil {
-		return err, nil
-	}
-	if len(key) != 32 {
-		return errors.New("bs64密钥后长度不等于32"), nil
-	}
-
-	return nil, &WXBizMsgCrypt{
-		Token:          token,
-		EncodingAESKey: EncodingAESKey,
-		AppId:          appId,
-		Key:            key,
-	}
 }

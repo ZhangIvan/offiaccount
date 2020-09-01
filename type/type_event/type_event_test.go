@@ -13,7 +13,12 @@ func TestEventMenuPicSysPhoto(t *testing.T) {
 <MsgType><![CDATA[event]]></MsgType>
 <Event><![CDATA[pic_sysphoto]]></Event>
 <EventKey><![CDATA[6]]></EventKey>
-<SendPicsInfo><Count>1</Count>
+<SendPicsInfo><Count>3</Count>
+<PicList>
+<item><PicMd5Sum><![CDATA[1b5f7c23b5bf75682a53e7b6d163e185]]></PicMd5Sum></item>
+<item><PicMd5Sum><![CDATA[2b5f7c23b5bf75682a53e7b6d163e185]]></PicMd5Sum></item>
+<item><PicMd5Sum><![CDATA[3b5f7c23b5bf75682a53e7b6d163e185]]></PicMd5Sum></item>
+</PicList>
 </SendPicsInfo>
 </xml>`
 
